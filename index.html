@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanmegh Thokade - Creator & Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Swiper.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Updated background for a classier look */
+            background-color: #f8f7f4;
+            background-image: radial-gradient(circle, #ddd, #ddd 1px, #f8f7f4 1px, #f8f7f4);
+            background-size: 28px 28px;
+            color: #1a1a1a;
+        }
+        .hero-bg {
+            /* Updated to a soft slate color */
+            background-color: #e2e8f0; 
+        }
+        .work-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .work-card-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .work-card:hover {
+            transform: translateY(-8px);
+            /* Softer, more premium shadow */
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #7c7c7c;
+        }
+        section {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        @media (min-width: 768px) {
+            section {
+                padding-top: 7rem;
+                padding-bottom: 7rem;
+            }
+        }
+        /* Custom Swiper Styles */
+        .swiper-container {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 50px; /* Space for pagination */
+        }
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            height: auto; /* Allow slides to have natural height */
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #334155; /* slate-700 */
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .swiper-pagination-bullet-active {
+            background-color: #334155; /* slate-700 */
+        }
+        .film-poster {
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            width: 100%;
+            background-color: #e2e8f0;
+        }
+        .app-poster {
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            width: 100%;
+            background-color: #e2e8f0;
+        }
+        .tech-tag {
+            display: inline-block;
+            background-color: #e5e7eb; /* gray-200 */
+            color: #4b5563; /* gray-600 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .section-links a {
+            transition: color 0.3s;
+        }
+        .section-links a:hover {
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header & Navigation -->
+        <header class="py-6 md:py-8 flex justify-between items-center sticky top-0 bg-f8f7f4/80 backdrop-blur-sm z-30">
+            <a href="#home" class="text-xl md:text-2xl font-bold tracking-tight">Sanmegh Thokade</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-base font-medium">Home</a>
+                <a href="#filming" class="nav-link text-base font-medium">Filming</a>
+                <a href="#apps" class="nav-link text-base font-medium">Apps</a>
+                <a href="#travels" class="nav-link text-base font-medium">Travels</a>
+                <a href="#cooking" class="nav-link text-base font-medium">Cooking</a>
+                <a href="#writing" class="nav-link text-base font-medium">Writing</a>
+                <a href="#photography" class="nav-link text-base font-medium">Photography</a>
+                <a href="#contact" class="nav-link text-base font-medium">Contact</a>
+            </nav>
+            <button id="menu-btn" class="md:hidden block text-2xl z-40">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </header>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white/90 backdrop-blur-sm z-30">
+            <div class="flex flex-col items-center justify-center h-full space-y-8">
+                <a href="#home" class="mobile-nav-link text-2xl font-medium">Home</a>
+                <a href="#filming" class="mobile-nav-link text-2xl font-medium">Filming</a>
+                <a href="#apps" class="mobile-nav-link text-2xl font-medium">Apps</a>
+                <a href="#travels" class="mobile-nav-link text-2xl font-medium">Travels</a>
+                <a href="#cooking" class="mobile-nav-link text-2xl font-medium">Cooking</a>
+                <a href="#writing" class="mobile-nav-link text-2xl font-medium">Writing</a>
+                <a href="#photography" class="mobile-nav-link text-2xl font-medium">Photography</a>
+                <a href="#contact" class="mobile-nav-link text-2xl font-medium">Contact</a>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-bg rounded-2xl py-20 md:py-0 md:h-[600px]">
+            <div class="container mx-auto h-full flex flex-col md:flex-row items-center justify-center text-center md:text-left">
+                <div class="md:w-1/2 px-4">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tighter">
+                        A creator and explorer telling stories through digital mediums.
+                    </h1>
+                    <p class="mt-6 text-lg md:text-xl text-gray-700">
+                        Welcome to my corner of the internet where I share my work in film, code, travel, and photography.
+                    </p>
+                </div>
+                <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center items-center">
+                    <div class="w-64 h-64 md:w-96 md:h-96 bg-slate-300 rounded-full flex items-center justify-center">
+                        <span class="text-slate-500">Your Photo Here</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filming Section -->
+        <section id="filming">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Filming</h2>
+            <div class="swiper-container section-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1: Lift -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://m.media-amazon.com/images/M/MV5BM2Q0OGIwMDMtOGY5Yi00YmRjLTljYjUtN2Q2ZGQyMTMxZTE3XkEyXkFqcGc@._V1_.jpg" alt="Lift film poster" class="film-poster" onerror="this.onerror=null;this.src='https://placehold.co/800x1200/e2e8f0/334155?text=Lift';">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Lift</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A passionate writer gets stuck in a lift.</p>
+                                <a href="https://www.imdb.com/title/tt15107210" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2: Die Happy -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="" alt="Die Happy film poster" class="film-poster" onerror="this.onerror=null;this.src='https://placehold.co/800x1200/dbeafe/1e3a8a?text=Die+Happy';">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Die Happy</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A Christmas dinner does not go as expected when the child witnesses an argument between his religious mother, who believes God controls all the paths of life, and his scientist grandpa, who dedicated his whole life inventing time-travel.</p>
+                                <a href="https://www.imdb.com/title/tt15531054" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3: Lizzie Wants to Play -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://m.media-amazon.com/images/M/MV5BZjdlOGRiZjYtNmY5Zi00MDkwLTkzZGItODcwOTcxZmM2YTQ3XkEyXkFqcGc@._V1_.jpg" alt="Lizzie Wants to Play film poster" class="film-poster" onerror="this.onerror=null;this.src='https://placehold.co/800x1200/fee2e2/991b1b?text=Lizzie+Wants+to+Play';">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Lizzie Wants to Play</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Emma Parker relocates to a new flat, which is haunted by the previous tenant, Lizzie. Lizzie, wanting to play a game with Emma for some reason, traps her and won't let her escape. Emma will soon realize the reason when the next tenants arrive.</p>
+                                <a href="https://www.imdb.com/title/tt12845602" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 4: The Sleepwalkers -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="" alt="The Sleepwalkers film poster" class="film-poster" onerror="this.onerror=null;this.src='https://placehold.co/800x1200/d1fae5/065f46?text=The+Sleepwalkers';">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">The Sleepwalkers</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A man wakes up in an unknown house, at an unexpected time, and in a different body - only to realize he's now a part of the bizarre killings happening across the globe.</p>
+                                <a href="https://www.imdb.com/title/tt15347892" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="text-center mt-8 space-x-6 section-links text-gray-500 font-medium">
+                <a href="https://www.instagram.com/sanmeghfilms" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.youtube.com/@sanmeghthokade2132" target="_blank" rel="noopener noreferrer">YouTube</a>
+                <a href="https://www.imdb.com/name/nm11794280" target="_blank" rel="noopener noreferrer">IMDb</a>
+            </div>
+        </section>
+
+        <!-- Apps Section -->
+        <section id="apps" class="border-t border-gray-200">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Apps</h2>
+            <div class="swiper-container section-swiper">
+                <div class="swiper-wrapper">
+                    <!-- App 1: Bankie -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/dbeafe/1e3a8a?text=Bankie" alt="Bankie App" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Bankie</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A web application that lets you browse bank exports in a user-friendly manner, with filters and categorization, to better manage your expenses and savings.</p>
+                                <div class="mb-4">
+                                    <span class="tech-tag">React JS</span>
+                                    <span class="tech-tag">Chart JS</span>
+                                </div>
+                                <a href="https://sanmegh.com/apps/bankie" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- App 2: Dieter -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/d1fae5/065f46?text=Dieter" alt="Dieter App" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Dieter</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A mobile app for managing daily meals based on ingredients in the kitchen. It creates and logs meals to calculate the nutrition value and track daily intake.</p>
+                                <div class="mb-4">
+                                    <span class="tech-tag">Angular JS</span>
+                                    <span class="tech-tag">Ionic</span>
+                                    <span class="tech-tag">Firebase</span>
+                                </div>
+                                <a href="https://sanmegh.com/apps/dieter" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- App 3: DriveMan -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fef3c7/92400e?text=DriveMan" alt="DriveMan App" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">DriveMan</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A desktop-server application that scans and categorizes unorganised drive data, providing a clean and browsable API for files without manual cleaning.</p>
+                                <div class="mb-4">
+                                     <span class="tech-tag">Spring Boot</span>
+                                     <span class="tech-tag">Angular JS</span>
+                                     <span class="tech-tag">MongoDB</span>
+                                </div>
+                                <a href="https://sanmegh.com/apps/driveman" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- App 4: Smart Home Assistant -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/f3e8ff/6b21a8?text=Smart+Home" alt="Smart Home Assistant App" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Smart Home Assistant</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">An integration of various IoT devices to make dumb appliances smart, with home automations to increase efficiency, savings, and convenience.</p>
+                                <div class="mb-4">
+                                    <span class="tech-tag">IoT</span>
+                                    <span class="tech-tag">Home Assistant</span>
+                                    <span class="tech-tag">Gemini/ChatGPT</span>
+                                </div>
+                                <a href="https://sanmegh.com/apps/smart-home" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="text-center mt-8 space-x-6 section-links text-gray-500 font-medium">
+                <a href="https://www.linkedin.com/in/sanmeghthokde/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/sanmegh" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </section>
+
+        <!-- Travels Section -->
+        <section id="travels" class="border-t border-gray-200">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Travels</h2>
+            <div class="swiper-container section-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fecaca/991b1b?text=England" alt="Travels in England" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">England</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Discovering the history and charm of England.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fed7aa/9a3412?text=Portugal" alt="Travels in Portugal" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Portugal</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Exploring the vibrant culture and coastlines of Portugal.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fee2e2/991b1b?text=India" alt="Travels in India" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">India</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Immersed in the rich traditions and colors of India.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/d9f99d/3f6212?text=Thailand" alt="Travels in Thailand" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Thailand</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Adventures through the stunning landscapes of Thailand.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/bfdbfe/1e40af?text=Germany" alt="Travels in Germany" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Germany</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Exploring the historic cities and forests of Germany.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/ddd6fe/5b21b6?text=Netherlands" alt="Travels in Netherlands" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Netherlands</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Wandering through the canals and tulip fields of the Netherlands.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/cffafe/0e7490?text=France" alt="Travels in France" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">France</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Savoring the art, food, and romance of France.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fce7f3/9d174d?text=Norway" alt="Travels in Norway" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Norway</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Chasing the northern lights and exploring the fjords of Norway.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/e0f2fe/075985?text=Denmark" alt="Travels in Denmark" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Denmark</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Experiencing the design and happiness of Denmark.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fef9c3/854d0e?text=Northern+Ireland" alt="Travels in Northern Ireland" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Northern Ireland</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Discovering the dramatic landscapes of Northern Ireland.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/ecfccb/365314?text=Singapore" alt="Travels in Singapore" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Singapore</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Exploring the futuristic gardens and vibrant streets of Singapore.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fde68a/854d0e?text=Malaysia" alt="Travels in Malaysia" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Malaysia</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A journey through the diverse cultures and rainforests of Malaysia.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fbcfe8/9d174d?text=Belgium" alt="Travels in Belgium" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Belgium</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Tasting the chocolate, waffles, and history of Belgium.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fae8ff/701a75?text=UAE" alt="Travels in UAE" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">UAE</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">From desert sands to futuristic skyscrapers in the UAE.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/e0e7ff/3730a3?text=Spain" alt="Travels in Spain" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Spain</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Enjoying the sun, tapas, and passion of Spain.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/dbeafe/1e3a8a?text=Greece" alt="Travels in Greece" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Greece</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Island hopping and exploring ancient ruins in Greece.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fef3c7/92400e?text=Hungary" alt="Travels in Hungary" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Hungary</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Discovering the history and thermal baths of Hungary.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fde68a/854d0e?text=Czech+Republic" alt="Travels in Czech Republic" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Czech Republic</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Exploring the fairytale castles and medieval towns of the Czech Republic.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fecaca/991b1b?text=Austria" alt="Travels in Austria" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Austria</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Wandering through the musical cities and alpine landscapes of Austria.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/e0f2fe/075985?text=Iceland" alt="Travels in Iceland" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Iceland</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Chasing waterfalls and volcanoes in the land of fire and ice.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/d1fae5/065f46?text=Switzerland" alt="Travels in Switzerland" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Switzerland</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Hiking through the majestic Alps of Switzerland.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/ddd6fe/5b21b6?text=Italy" alt="Travels in Italy" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Italy</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Indulging in the art, history, and cuisine of Italy.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="text-center mt-8 space-x-6 section-links text-gray-500 font-medium">
+                <a href="http://instagram.com/sanmeghtravels" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+        </section>
+
+        <!-- Cooking Section -->
+        <section id="cooking" class="border-t border-gray-200">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Cooking</h2>
+            <div class="swiper-container section-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fef9c3/b45309?text=Tofu+Rice+Bowl" alt="Spiced Tofu Sesame Rice Bowl" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Spiced Tofu Sesame Rice Bowl</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">with Garlic Tenderstem and Pickled Carrot Ribbons.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fecdd3/be123c?text=Chicken+Soup" alt="Creamy Chipotle Chicken & Beans Soup" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Creamy Chipotle Chicken & Beans Soup</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">with Crispy Tortilla Chips.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/e0e7ff/3730a3?text=Puran+Poli" alt="Puran Poli" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Puran Poli</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">with kat amti and chanadal chutney.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/d1fae5/065f46?text=Halloumi+Salad" alt="Chermoula Halloumi w. Summer Salad & Naan" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Chermoula Halloumi w. Summer Salad & Naan</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A fresh and vibrant summer dish.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fef3c7/92400e?text=Cajun+Pasta" alt="Creamy Cajun Chicken Pasta" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Creamy Cajun Chicken Pasta</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A rich and flavorful pasta dish.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/f3e8ff/6b21a8?text=Thai+Curry" alt="Tofu & Courgette Yellow Thai Curry Rice" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Tofu & Courgette Yellow Thai Curry Rice</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A fragrant and delicious Thai curry.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/ecfccb/4d7c0f?text=Chicken+Milanese" alt="Lemony Chicken Milanese Spaghetti" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Lemony Chicken Milanese Spaghetti</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">w. Tomato Sauce & Wilted Spinach.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fde68a/854d0e?text=Lettuce+Wraps" alt="Satay Chicken Lettuce Wraps" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Satay Chicken Lettuce Wraps</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A light and healthy meal with a peanut kick.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fbcfe8/9d174d?text=Fajita+Pizza" alt="Chicken Thigh Fajita Pizza" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Chicken Thigh Fajita Pizza</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">w. Chipotle Chilli Mayo.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fae8ff/701a75?text=Pav+Bhaji" alt="Mumbai-Special Cheese Pav Bhaji" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Mumbai-Special Cheese Pav Bhaji</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">A classic Indian street food favorite.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="text-center mt-8 space-x-6 section-links text-gray-500 font-medium">
+                <a href="http://instagram.com/sanmeghcooks" target="_blank" rel="noopener noreferrer">Instagram</a>
+            </div>
+        </section>
+
+        <!-- Writing Section -->
+        <section id="writing" class="border-t border-gray-200">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Writing</h2>
+            <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg md:max-w-2xl lg:max-w-5xl mx-auto">
+                <div class="p-6 md:p-8">
+                    <div class="grid md:grid-cols-3 gap-8 items-start">
+                        <!-- Poster Column -->
+                        <div class="md:col-span-1">
+                            <img src="https://placehold.co/800x1200/e2e8f0/334155?text=Projections" alt="Projections Novel Cover" class="film-poster w-full mx-auto rounded-lg shadow-lg" style="max-width: 250px;">
+                        </div>
+                        <!-- Reviews Column -->
+                        <div class="md:col-span-2">
+                            <h3 class="text-2xl md:text-3xl font-bold mb-6">Projections</h3>
+                            <div class="space-y-6">
+                                <!-- Review 1 -->
+                                <div>
+                                    <blockquote class="text-gray-600 italic border-l-4 border-slate-200 pl-4">
+                                        "The simplicity and the rawness of emotions are the highlight of this book. It is a journey of souls through the process of acceptance."
+                                    </blockquote>
+                                    <p class="text-right text-sm text-gray-500 mt-2">- Hitesha Deshpande, Author of "Knots and No Crosses"</p>
+                                </div>
+                                <!-- Review 2 -->
+                                <div>
+                                    <blockquote class="text-gray-600 italic border-l-4 border-slate-200 pl-4">
+                                        "Amazing, emotional, and life altering! It is really enjoyable and you wouldn’t want it to end. I connected so much with all of them."
+                                    </blockquote>
+                                    <p class="text-right text-sm text-gray-500 mt-2">- Cecily Bonney, “cecilybookreview”</p>
+                                </div>
+                                <!-- Review 3 -->
+                                <div>
+                                    <blockquote class="text-gray-600 italic border-l-4 border-slate-200 pl-4">
+                                        "It is a really interesting read. Projections, wonder what they are? It’s a fun surprise and a unique one too."
+                                    </blockquote>
+                                    <p class="text-right text-sm text-gray-500 mt-2">- Margorie Springer, “cocosbookreviews”</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Summary -->
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                         <p class="text-gray-700">This novel explores love beyond the typical romance, focusing on the real-life challenges of falling out of love and finding ways to keep it alive. Follow three characters as they navigate lost love, grief, and fading marriages, ultimately discovering life-transforming solutions through a mysterious element called 'Projections'.</p>
+                        <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-4 inline-block">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photography Section -->
+        <section id="photography" class="border-t border-gray-200">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Photography</h2>
+            <div class="swiper-container section-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Photography 1: Maternity -->
+                    <div class="swiper-slide">
+                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/f3e8ff/6b21a8?text=Maternity" alt="Maternity Photography" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Maternity</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Capturing the beautiful journey of motherhood.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Photography 2: Housewarming -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/ecfccb/4d7c0f?text=Housewarming" alt="Housewarming Photography" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Housewarming</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Documenting the joy of a new home.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Photography 3: Baby Shower -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fce7f3/9d174d?text=Baby+Shower" alt="Baby Shower Photography" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Baby Shower</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Celebrating the anticipation of a new arrival.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Photography 4: Product -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/e0e7ff/3730a3?text=Product" alt="Product Photography" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Product</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Showcasing products with clean and professional imagery.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Photography 5: Baptism -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/dbeafe/1e3a8a?text=Baptism" alt="Baptism Photography" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Baptism</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Commemorating a special and sacred ceremony.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Photography 6: Newborn -->
+                    <div class="swiper-slide">
+                        <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
+                            <img src="https://placehold.co/800x600/fef3c7/92400e?text=Newborn" alt="Newborn Photography" class="app-poster">
+                            <div class="p-6 md:p-8 work-card-content">
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Newborn</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Capturing the precious first moments of a new life.</p>
+                                <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <div class="text-center mt-8 space-x-6 section-links text-gray-500 font-medium">
+                <a href="mailto:sanmegh.clicks@gmail.com">Email</a>
+            </div>
+        </section>
+
+        <!-- Footer / Contact Section -->
+        <footer id="contact" class="text-center border-t border-gray-200">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Let's Connect</h2>
+            <p class="text-lg md:text-xl max-w-2xl mx-auto text-gray-700 mb-8">
+                Have a project in mind or just want to say hello? I'd love to hear from you.
+            </p>
+            <a href="mailto:contact@sanmegh.com" class="inline-block bg-slate-700 text-white font-medium py-3 px-8 rounded-lg text-lg hover:bg-slate-800 transition-colors">
+                contact@sanmegh.com
+            </a>
+            <p class="mt-12 text-gray-500 text-sm">&copy; 2024 Sanmegh Thokade. All Rights Reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Swiper.js JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMenu() {
+            const isMenuOpen = !mobileMenu.classList.contains('hidden');
+            mobileMenu.classList.toggle('hidden');
+            
+            if (!isMenuOpen) {
+                document.body.style.overflow = 'hidden';
+                menuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+            } else {
+                document.body.style.overflow = 'auto';
+                menuBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`;
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        
+        // Close menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // --- Swiper Initialization for all carousels ---
+        document.querySelectorAll('.section-swiper').forEach(container => {
+            const swiper = new Swiper(container, {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                mousewheel: {
+                    forceToAxis: true,
+                },
+                pagination: {
+                    el: container.querySelector('.swiper-pagination'),
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: container.querySelector('.swiper-button-next'),
+                    prevEl: container.querySelector('.swiper-button-prev'),
+                },
+                breakpoints: {
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 40
+                    },
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
