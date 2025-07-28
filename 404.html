@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script type="text/javascript">
+      const path = window.location.pathname;
+
+      const section = path.replace(/^\/|\/$/g, '').split('/').pop();
+
+      if (section) {
+        const redirectUrl = window.location.origin + '/#' + section;
+        window.location.replace(redirectUrl);
+      } else {
+        window.location.replace(window.location.origin);
+      }
+    </script>
+  </head>
+  <body>
+    If you are not redirected automatically, please <a href="/">click here</a>.
+  </body>
+</html>
