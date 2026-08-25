@@ -5,29 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sanmegh Thokade - Creator & Explorer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#f6f5f1',
+                        ink: '#1a1a1a',
+                        accent: '#b45309',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Fraunces', 'Georgia', 'serif'],
+                    },
+                },
+            },
+        };
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Swiper.js CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Updated background for a classier look */
-            background-color: #f8f7f4;
-            background-image: radial-gradient(circle, #ddd, #ddd 1px, #f8f7f4 1px, #f8f7f4);
-            background-size: 28px 28px;
+            /* Soft warm paper with a subtle dot grid */
+            background-color: #f6f5f1;
+            background-image: radial-gradient(circle, #e3e1da 1px, transparent 1px);
+            background-size: 32px 32px;
             color: #1a1a1a;
         }
+        h1, h2, h3, .font-display {
+            font-family: 'Fraunces', Georgia, serif;
+        }
         .hero-bg {
-            /* Updated to a soft slate color */
-            background-color: #e2e8f0; 
+            /* Soft layered gradient for depth */
+            background-color: #e7eaf0;
+            background-image:
+                radial-gradient(120% 120% at 85% 15%, rgba(180, 83, 9, 0.10), transparent 55%),
+                radial-gradient(110% 110% at 0% 100%, rgba(51, 65, 85, 0.14), transparent 60%),
+                linear-gradient(135deg, #eef1f5 0%, #e2e8f0 100%);
         }
         .work-card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
+            border: 1px solid rgba(15, 23, 42, 0.06);
         }
         .work-card-content {
             flex-grow: 1;
@@ -37,13 +62,63 @@
         .work-card:hover {
             transform: translateY(-8px);
             /* Softer, more premium shadow */
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.18);
+        }
+        /* Subtle image zoom on card hover */
+        .work-card .film-poster,
+        .work-card .app-poster {
+            transition: transform 0.5s ease;
+        }
+        .work-card:hover .film-poster,
+        .work-card:hover .app-poster {
+            transform: scale(1.04);
+        }
+        /* Eyebrow label above section titles */
+        .eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #b45309;
+        }
+        .site-header {
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+        .site-header.scrolled {
+            box-shadow: 0 8px 30px -18px rgb(0 0 0 / 0.25);
+            border-bottom-color: rgba(15, 23, 42, 0.08);
         }
         .nav-link {
+            position: relative;
             transition: color 0.3s;
         }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background-color: #b45309;
+            transition: width 0.3s ease;
+        }
         .nav-link:hover {
-            color: #7c7c7c;
+            color: #1a1a1a;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .mobile-nav-link {
+            transition: color 0.3s;
+        }
+        .mobile-nav-link:hover {
+            color: #b45309; /* accent */
+        }
+        section, footer {
+            /* Offset anchored scrolling so content clears the sticky header */
+            scroll-margin-top: 6rem;
         }
         section {
             padding-top: 5rem;
@@ -77,7 +152,7 @@
             bottom: 10px !important; /* Force dots to the bottom */
         }
         .swiper-pagination-bullet-active {
-            background-color: #334155; /* slate-700 */
+            background-color: #b45309; /* accent */
         }
         .film-poster {
             aspect-ratio: 2 / 3;
@@ -106,7 +181,7 @@
             transition: color 0.3s;
         }
         .section-links a:hover {
-            color: #4b5563;
+            color: #b45309; /* accent */
         }
     </style>
 </head>
@@ -116,9 +191,9 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Header & Navigation -->
-        <header class="py-6 md:py-8 flex justify-between items-center sticky top-0 bg-f8f7f4/80 backdrop-blur-sm z-30">
-            <a href="/#home" class="text-xl md:text-2xl font-bold tracking-tight">Sanmegh Thokade</a>
-            <nav class="hidden md:flex items-center space-x-8">
+        <header class="site-header py-5 md:py-6 flex justify-between items-center sticky top-0 bg-paper/80 backdrop-blur-md z-30">
+            <a href="/#home" class="font-display text-xl md:text-2xl font-semibold tracking-tight">Sanmegh Thokade</a>
+            <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
                 <a href="/#home" class="nav-link text-base font-medium">Home</a>
                 <a href="/#filming" class="nav-link text-base font-medium">Filming</a>
                 <a href="/#apps" class="nav-link text-base font-medium">Apps</a>
@@ -128,13 +203,13 @@
                 <a href="/#photography" class="nav-link text-base font-medium">Photography</a>
                 <a href="/#contact" class="nav-link text-base font-medium">Contact</a>
             </nav>
-            <button id="menu-btn" class="md:hidden block text-2xl z-40">
+            <button id="menu-btn" class="lg:hidden block text-2xl z-40">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
         </header>
         
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white/90 backdrop-blur-sm z-30">
+        <div id="mobile-menu" class="hidden lg:hidden fixed inset-0 bg-paper/95 backdrop-blur-lg z-30">
             <div class="flex flex-col items-center justify-center h-full space-y-8">
                 <a href="/#home" class="mobile-nav-link text-2xl font-medium">Home</a>
                 <a href="/#filming" class="mobile-nav-link text-2xl font-medium">Filming</a>
@@ -148,18 +223,23 @@
         </div>
 
         <!-- Hero Section -->
-        <section id="home" class="hero-bg rounded-2xl py-20 md:py-0 md:h-[600px]">
-            <div class="container mx-auto h-full flex flex-col md:flex-row items-center justify-center text-center md:text-left">
-                <div class="md:w-1/2 px-4">
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tighter">
+        <section id="home" class="hero-bg rounded-3xl py-16 md:py-24 md:min-h-[600px] overflow-hidden">
+            <div class="container mx-auto h-full flex flex-col lg:flex-row items-center justify-center text-center lg:text-left px-6 md:px-12 gap-10 lg:gap-8">
+                <div class="lg:w-1/2">
+                    <p class="eyebrow mb-5">Filmmaker · Developer · Storyteller</p>
+                    <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-semibold leading-[1.05] tracking-tight">
                         A creator and explorer telling stories through digital mediums.
                     </h1>
-                    <p class="mt-6 text-lg md:text-xl text-gray-700">
+                    <p class="mt-6 text-lg md:text-xl text-gray-700 max-w-xl mx-auto lg:mx-0">
                         Welcome to my corner of the internet where I share my work in film, code, travel, and photography.
                     </p>
+                    <div class="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
+                        <a href="#filming" class="inline-block bg-slate-800 text-white font-medium py-3 px-7 rounded-lg hover:bg-slate-900 transition-colors">Explore my work</a>
+                        <a href="#contact" class="inline-block bg-white/70 text-slate-800 font-medium py-3 px-7 rounded-lg ring-1 ring-slate-300 hover:bg-white transition-colors">Get in touch</a>
+                    </div>
                 </div>
-                <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center items-center">
-                    <div class="w-64 h-64 md:w-96 md:h-96 rounded-full overflow-hidden shadow-lg">
+                <div class="lg:w-1/2 flex justify-center items-center">
+                    <div class="w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-xl ring-4 ring-white/60">
                         <img src="images/profile.jpg" alt="Sanmegh Thokade" class="w-full h-full object-cover">
                     </div>
                 </div>
@@ -168,7 +248,10 @@
 
         <!-- Filming Section -->
         <section id="filming">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Filming</h2>
+            <div class="text-center mb-12 md:mb-16">
+                <p class="eyebrow mb-3">Short films &amp; screen work</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold">Filming</h2>
+            </div>
             <div class="swiper-container section-swiper">
                 <div class="swiper-wrapper">
                     <!-- Slide 1: Lift -->
@@ -178,8 +261,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Lift</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">A passionate writer gets stuck in a lift.</p>
-                                <a href="https://www.youtube.com/watch?v=Xd75i33VOPo" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Watch on YouTube &rarr;</a>
-                                <a href="https://www.imdb.com/title/tt15107210" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                                <a href="https://www.youtube.com/watch?v=Xd75i33VOPo" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Watch on YouTube &rarr;</a>
+                                <a href="https://www.imdb.com/title/tt15107210" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View on IMDb &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -190,7 +273,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Die Happy</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">A Christmas dinner does not go as expected when the child witnesses an argument between his religious mother, who believes God controls all the paths of life, and his scientist grandpa, who dedicated his whole life inventing time-travel.</p>
-                                <a href="https://www.imdb.com/title/tt15531054" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                                <a href="https://www.imdb.com/title/tt15531054" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View on IMDb &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -211,7 +294,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Lizzie Wants to Play</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Emma Parker relocates to a new flat, which is haunted by the previous tenant, Lizzie. Lizzie, wanting to play a game with Emma for some reason, traps her and won't let her escape. Emma will soon realize the reason when the next tenants arrive.</p>
-                                <a href="https://www.imdb.com/title/tt12845602" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View on IMDb &rarr;</a>
+                                <a href="https://www.imdb.com/title/tt12845602" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View on IMDb &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -229,7 +312,10 @@
 
         <!-- Apps Section -->
         <section id="apps" class="border-t border-gray-200">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Apps</h2>
+            <div class="text-center mb-12 md:mb-16">
+                <p class="eyebrow mb-3">Code &amp; products</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold">Apps</h2>
+            </div>
             <div class="swiper-container section-swiper">
                 <div class="swiper-wrapper">
                     <!-- App 1: Smart Home Assistant -->
@@ -244,7 +330,7 @@
                                     <span class="tech-tag">Home Assistant</span>
                                     <span class="tech-tag">Gemini/ChatGPT</span>
                                 </div>
-                                <!-- <a href="https://sanmegh.com/apps/smart-home" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a> -->
+                                <!-- <a href="https://sanmegh.com/apps/smart-home" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Project &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -259,7 +345,7 @@
                                     <span class="tech-tag">React JS</span>
                                     <span class="tech-tag">Chart JS</span>
                                 </div>
-                                <a href="https://github.com/sanmegh/bankie" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                                <a href="https://github.com/sanmegh/bankie" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Project &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -275,7 +361,7 @@
                                     <span class="tech-tag">Ionic</span>
                                     <span class="tech-tag">Firebase</span>
                                 </div>
-                                <a href="https://github.com/sanmegh/dieter" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                                <a href="https://github.com/sanmegh/dieter" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Project &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -291,7 +377,7 @@
                                      <span class="tech-tag">Angular JS</span>
                                      <span class="tech-tag">MongoDB</span>
                                 </div>
-                                <a href="https://github.com/sanmegh/driveman" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Project &rarr;</a>
+                                <a href="https://github.com/sanmegh/driveman" target="_blank" rel="noopener noreferrer" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Project &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -309,7 +395,10 @@
 
         <!-- Travels Section -->
         <section id="travels" class="border-t border-gray-200">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Travels</h2>
+            <div class="text-center mb-12 md:mb-16">
+                <p class="eyebrow mb-3">Around the world</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold">Travels</h2>
+            </div>
             <div class="swiper-container section-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -318,10 +407,10 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">England</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Discovering the history and charm of England.</p>
-								<a href="https://www.instagram.com/p/CvMxMGpIqQd/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Hogwarts in Action &rarr;</a>
-                                <a href="https://www.instagram.com/p/CvFSGQWociu/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Tower Bridge at Night &rarr;</a>
-								<a href="https://www.instagram.com/p/Cv9XAoqoWsE/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Clubbing at Koko &rarr;</a>
-                                <a href="https://www.instagram.com/p/CwSYMPPILQp/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Shard Standing Tall &rarr;</a>
+								<a href="https://www.instagram.com/p/CvMxMGpIqQd/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Hogwarts in Action &rarr;</a>
+                                <a href="https://www.instagram.com/p/CvFSGQWociu/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Tower Bridge at Night &rarr;</a>
+								<a href="https://www.instagram.com/p/Cv9XAoqoWsE/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Clubbing at Koko &rarr;</a>
+                                <a href="https://www.instagram.com/p/CwSYMPPILQp/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Shard Standing Tall &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -331,7 +420,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Portugal</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Exploring the vibrant culture and coastlines of Portugal.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Read More &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -341,8 +430,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">India</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Immersed in the rich traditions and colors of India.</p>
-                                <a href="https://www.instagram.com/p/C4gNcJrobIQ/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Dreamy Sea Shore &rarr;</a>
-                                <a href="https://www.instagram.com/p/C3KCzzwtruw/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Butter up the Pav Bhaji &rarr;</a>
+                                <a href="https://www.instagram.com/p/C4gNcJrobIQ/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Dreamy Sea Shore &rarr;</a>
+                                <a href="https://www.instagram.com/p/C3KCzzwtruw/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Butter up the Pav Bhaji &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -352,9 +441,9 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Thailand</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Adventures through the stunning landscapes of Thailand.</p>
-                                <a href="https://www.instagram.com/p/C2kH04CPQ5A/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">At the Top of Bangkok &rarr;</a>
-								<a href="https://www.instagram.com/p/C8KjGdhsmRr/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Sun Temple &rarr;</a>
-								<a href="https://www.instagram.com/p/DEyvoyYyLbR/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Enter the Dragon &rarr;</a>
+                                <a href="https://www.instagram.com/p/C2kH04CPQ5A/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">At the Top of Bangkok &rarr;</a>
+								<a href="https://www.instagram.com/p/C8KjGdhsmRr/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Sun Temple &rarr;</a>
+								<a href="https://www.instagram.com/p/DEyvoyYyLbR/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Enter the Dragon &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -364,9 +453,9 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Germany</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Exploring the historic cities and forests of Germany.</p>
-                                <a href="https://www.instagram.com/p/DFJI8rWTVqe/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Berlin - Exploring the Glass Dome &rarr;</a>
-                                <a href="https://www.instagram.com/p/C9bt83QsOig/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Munich - Raise a Glass &rarr;</a>
-                                <a href="https://www.instagram.com/p/C9UL0sJsId2/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Berlin - A History Unforgettable, Unforgivable &rarr;</a>
+                                <a href="https://www.instagram.com/p/DFJI8rWTVqe/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Berlin - Exploring the Glass Dome &rarr;</a>
+                                <a href="https://www.instagram.com/p/C9bt83QsOig/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Munich - Raise a Glass &rarr;</a>
+                                <a href="https://www.instagram.com/p/C9UL0sJsId2/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Berlin - A History Unforgettable, Unforgivable &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -376,7 +465,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Netherlands</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Wandering through the canals and tulip fields of the Netherlands.</p>
-                                <a href="https://www.instagram.com/p/DApyshfMVoQ/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Amsterdam - Getting High, Going Higher &rarr;</a>
+                                <a href="https://www.instagram.com/p/DApyshfMVoQ/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Amsterdam - Getting High, Going Higher &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -386,7 +475,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">France</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Savoring the art, food, and romance of France.</p>
-                                <a href="https://www.instagram.com/p/CvIRO_Homdw/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Sparking Tower &rarr;</a>
+                                <a href="https://www.instagram.com/p/CvIRO_Homdw/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Sparking Tower &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -396,8 +485,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Norway</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Chasing the northern lights and exploring the fjords of Norway.</p>
-                                <a href="https://www.instagram.com/p/C_nQ0Woslxu/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Admiring the Nordic &rarr;</a>
-                                <a href="https://www.instagram.com/p/C8ysYzIMbGq/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The City Tiger &rarr;</a>
+                                <a href="https://www.instagram.com/p/C_nQ0Woslxu/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Admiring the Nordic &rarr;</a>
+                                <a href="https://www.instagram.com/p/C8ysYzIMbGq/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The City Tiger &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -407,8 +496,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Denmark</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Experiencing the design and happiness of Denmark.</p>
-                                <a href="https://www.instagram.com/p/C82A0b6MfJy/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Top of a Church &rarr;</a>
-                                <a href="https://www.instagram.com/p/C_WYHPCMrSa/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Top of another Church &rarr;</a>
+                                <a href="https://www.instagram.com/p/C82A0b6MfJy/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Top of a Church &rarr;</a>
+                                <a href="https://www.instagram.com/p/C_WYHPCMrSa/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Top of another Church &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -418,7 +507,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Northern Ireland</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Discovering the dramatic landscapes of Northern Ireland.</p>
-                                <a href="https://www.instagram.com/p/C4qpaejsyL_/?img_index=1" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Legendary Museum &rarr;</a>
+                                <a href="https://www.instagram.com/p/C4qpaejsyL_/?img_index=1" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Legendary Museum &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -428,8 +517,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Singapore</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Exploring the futuristic gardens and vibrant streets of Singapore.</p>
-                                <a href="https://www.instagram.com/p/C4xkXWqMKLy/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Jewel at the Airport &rarr;</a>
-								<a href="https://www.instagram.com/p/C685tbVsoLw/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Green in the Concrete &rarr;</a>
+                                <a href="https://www.instagram.com/p/C4xkXWqMKLy/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Jewel at the Airport &rarr;</a>
+								<a href="https://www.instagram.com/p/C685tbVsoLw/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Green in the Concrete &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -439,9 +528,9 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Malaysia</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">A journey through the diverse cultures and rainforests of Malaysia.</p>
-                                <a href="https://www.instagram.com/p/DFBb7uBzbyl/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Watching the Twins &rarr;</a>
-                                <a href="https://www.instagram.com/p/C3cJ5tst3yM/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Climbing up to Serenity &rarr;</a>
-                                <a href="https://www.instagram.com/p/DFaX4YyzOyl/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Trying out some Chinese &rarr;</a>
+                                <a href="https://www.instagram.com/p/DFBb7uBzbyl/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Watching the Twins &rarr;</a>
+                                <a href="https://www.instagram.com/p/C3cJ5tst3yM/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Climbing up to Serenity &rarr;</a>
+                                <a href="https://www.instagram.com/p/DFaX4YyzOyl/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Trying out some Chinese &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -451,8 +540,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Belgium</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Tasting the chocolate, waffles, and history of Belgium.</p>
-                                <a href="https://www.instagram.com/p/C2-fdiqvUPW/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Making the Chocolate &rarr;</a>
-                                <a href="https://www.instagram.com/p/CyDG2yaoMnz/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Panaromic Square &rarr;</a>
+                                <a href="https://www.instagram.com/p/C2-fdiqvUPW/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Making the Chocolate &rarr;</a>
+                                <a href="https://www.instagram.com/p/CyDG2yaoMnz/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Panaromic Square &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -462,7 +551,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">UAE</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">From desert sands to futuristic skyscrapers in the UAE.</p>
-                                <a href="https://www.instagram.com/p/CvK-s4dINLd/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Dubai - View from the Burj &rarr;</a>
+                                <a href="https://www.instagram.com/p/CvK-s4dINLd/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Dubai - View from the Burj &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -472,7 +561,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Spain</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Enjoying the sun, tapas, and passion of Spain.</p>
-                                <a href="https://www.instagram.com/p/Cwmf8BloqlG/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Colourful Gaudis &rarr;</a>
+                                <a href="https://www.instagram.com/p/Cwmf8BloqlG/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Colourful Gaudis &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -482,7 +571,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Greece</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Island hopping and exploring ancient ruins in Greece.</p>
-                                <a href="https://www.instagram.com/p/CwErLQioGKA/?img_index=1" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Sunny Red Sand &rarr;</a>
+                                <a href="https://www.instagram.com/p/CwErLQioGKA/?img_index=1" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Sunny Red Sand &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -492,7 +581,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Hungary</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Discovering the history and thermal baths of Hungary.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Read More &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -502,7 +591,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Czech Republic</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Exploring the fairytale castles and medieval towns of the Czech Republic.</p>
-                                <a href="https://www.instagram.com/p/CvHrvpIofwP/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Waiting outside Prague Castle &rarr;</a>
+                                <a href="https://www.instagram.com/p/CvHrvpIofwP/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Waiting outside Prague Castle &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -512,7 +601,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Austria</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Wandering through the musical cities and alpine landscapes of Austria.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Read More &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -522,7 +611,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Iceland</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Chasing waterfalls and volcanoes in the land of fire and ice.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Read More &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Read More &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -532,9 +621,9 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Switzerland</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Hiking through the majestic Alps of Switzerland.</p>
-                                <a href="https://www.instagram.com/p/CwVbT3zo0hy/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Could it get more picturesque than this? &rarr;</a>
-                                <a href="https://www.instagram.com/p/CvULNWKNcAt/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Changing Seasons in Lucerne &rarr;</a>
-								<a href="https://www.instagram.com/p/C6F6EwMInIZ/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">The Mountains and the Valleys &rarr;</a>
+                                <a href="https://www.instagram.com/p/CwVbT3zo0hy/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Could it get more picturesque than this? &rarr;</a>
+                                <a href="https://www.instagram.com/p/CvULNWKNcAt/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Changing Seasons in Lucerne &rarr;</a>
+								<a href="https://www.instagram.com/p/C6F6EwMInIZ/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">The Mountains and the Valleys &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -544,7 +633,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Italy</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Indulging in the art, history, and cuisine of Italy.</p>
-                                <a href="https://www.instagram.com/p/C6X71SBo2In/" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Leaning On in Pisa &rarr;</a>
+                                <a href="https://www.instagram.com/p/C6X71SBo2In/" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Leaning On in Pisa &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -552,9 +641,9 @@
                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
                             <img src="images/travels/vatican-city.jpg" alt="Vatican City" class="app-poster">
                             <div class="p-6 md:p-8 work-card-content">
-                                <h3 class="text-xl md:text-2xl font-bold mb-2">Vactican City</h3>
-                                <p class="text-gray-600 mb-4 flex-grow">Indulging in the art, history, and cuisine of Italy.</p>
-                                <a href="https://www.instagram.com/p/CvnNfjJM6Xk/?img_index=1" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">Feeling Holy &rarr;</a>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2">Vatican City</h3>
+                                <p class="text-gray-600 mb-4 flex-grow">Standing in awe of the art and faith at the heart of the Vatican.</p>
+                                <a href="https://www.instagram.com/p/CvnNfjJM6Xk/?img_index=1" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">Feeling Holy &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -570,7 +659,10 @@
 
         <!-- Cooking Section -->
         <section id="cooking" class="border-t border-gray-200">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Cooking</h2>
+            <div class="text-center mb-12 md:mb-16">
+                <p class="eyebrow mb-3">From the kitchen</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold">Cooking</h2>
+            </div>
             <div class="swiper-container section-swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -579,7 +671,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Spiced Tofu Sesame Rice Bowl</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">with Garlic Tenderstem and Pickled Carrot Ribbons.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -589,7 +681,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Chipotle Chicken & Beans Soup</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">with Crispy Tortilla Chips.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -599,17 +691,17 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Puran Poli</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">with kat amti and chana-dal chutney.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
-                            <img src="images/cooking/halloumi-naan-salad.jpg" alt="Chermoula Halloumi w. Naan & Summer Salad" class="app-poster">
+                            <img src="images/cooking/halloumi-naan-salad.jpg" alt="Chermoula Halloumi w. Summer Salad & Naan" class="app-poster">
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Chermoula Halloumi w. Summer Salad & Naan</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">A fresh and vibrant summer dish.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -619,17 +711,17 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Creamy Cajun Chicken Pasta</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">A rich and flavorful pasta dish.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
-                            <img src="images/cooking/stuffed-pepper-gremolata.jpg" alt="Tofu & Courgette Yellow Thai Curry Rice" class="app-poster">
+                            <img src="images/cooking/stuffed-pepper-gremolata.jpg" alt="Mediterranean Stuffed Peppers" class="app-poster">
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Mediterranean Stuffed Peppers</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Parsley Gremolata</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -639,7 +731,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Bean & Tomato Stew</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Pesto Bulgar.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -649,27 +741,27 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Lemony Chicken Milanese Spaghetti</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Tomato Sauce & Wilted Spinach.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
-                            <img src="images/cooking/serrano-caprese-bruschetta.jpg" alt="Satay Chicken Lettuce Wraps" class="app-poster">
+                            <img src="images/cooking/serrano-caprese-bruschetta.jpg" alt="Serrano Caprese Bruschetta" class="app-poster">
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Serrano Caprese Bruschetta</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Avocado Salsa & Salad</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg">
-                            <img src="images/cooking/prawn-paella.jpg" alt="Satay Chicken Lettuce Wraps" class="app-poster">
+                            <img src="images/cooking/prawn-paella.jpg" alt="Prawn Paella" class="app-poster">
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Prawn Paella</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Lemon Aioli</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -679,7 +771,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Chicken Thigh Fajita Pizza</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Chipotle Chilli Mayo.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -689,7 +781,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Mumbai-Special Cheese Pav Bhaji</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">w. Cheese & Pickled Onion</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Recipe &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Recipe &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -705,7 +797,10 @@
 
         <!-- Photography Section -->
         <section id="photography" class="border-t border-gray-200">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Photography</h2>
+            <div class="text-center mb-12 md:mb-16">
+                <p class="eyebrow mb-3">Through the lens</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold">Photography</h2>
+            </div>
             <div class="swiper-container section-swiper">
                 <div class="swiper-wrapper">
                     <!-- Photography 1: Maternity -->
@@ -715,7 +810,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Maternity</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Capturing the beautiful journey of motherhood.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -726,7 +821,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Housewarming</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Documenting the joy of a new home.</p>
-                                <a href="https://photos.app.goo.gl/VV2gXTLvUz6vw4hCA" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
+                                <a href="https://photos.app.goo.gl/VV2gXTLvUz6vw4hCA" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -737,7 +832,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Baby Shower</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Celebrating the anticipation of a new arrival.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -748,7 +843,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Product</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Showcasing products with clean and professional imagery.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -759,8 +854,8 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Baptism</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Commemorating a special and sacred ceremony.</p>
-                                <a href="https://photos.app.goo.gl/HbMqrMUmwwMLma2x5" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a>
-                                <a href="https://photos.app.goo.gl/rpmYYK9mey9g9VT56" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Video &rarr;</a>
+                                <a href="https://photos.app.goo.gl/HbMqrMUmwwMLma2x5" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a>
+                                <a href="https://photos.app.goo.gl/rpmYYK9mey9g9VT56" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Video &rarr;</a>
                             </div>
                         </div>
                     </div>
@@ -771,7 +866,7 @@
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Newborn</h3>
                                 <p class="text-gray-600 mb-4 flex-grow">Capturing the precious first moments of a new life.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a> -->
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -781,8 +876,8 @@
                             <img src="images/photography/birthday.jpg" alt="Birthday Parties" class="film-poster">
                             <div class="p-6 md:p-8 work-card-content">
                                 <h3 class="text-xl md:text-2xl font-bold mb-2">Birthday Parties</h3>
-                                <p class="text-gray-600 mb-4 flex-grow">Capturing the precious first moments of a new life.</p>
-                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-slate-900 transition-colors mt-auto">View Gallery &rarr;</a> -->
+                                <p class="text-gray-600 mb-4 flex-grow">Freezing the candid joy and laughter of celebrations.</p>
+                                <!-- <a href="#" class="font-medium text-slate-700 hover:text-accent transition-colors mt-auto">View Gallery &rarr;</a> -->
                             </div>
                         </div>
                     </div>
@@ -798,7 +893,10 @@
 
         <!-- Writing Section -->
         <section id="writing" class="border-t border-gray-200">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 md:mb-16">Writing</h2>
+            <div class="text-center mb-12 md:mb-16">
+                <p class="eyebrow mb-3">Words &amp; stories</p>
+                <h2 class="font-display text-4xl md:text-5xl font-semibold">Writing</h2>
+            </div>
             <div class="work-card bg-white rounded-2xl overflow-hidden max-w-lg md:max-w-2xl lg:max-w-5xl mx-auto">
                 <div class="p-6 md:p-8">
                     <div class="grid md:grid-cols-3 gap-8 items-start">
@@ -837,7 +935,9 @@
                     <!-- Summary -->
                     <div class="mt-8 pt-6 border-t border-gray-200">
                          <p class="text-gray-700">This novel explores love beyond the typical romance, focusing on the real-life challenges of falling out of love and finding ways to keep it alive. Follow three characters as they navigate lost love, grief, and fading marriages, ultimately discovering life-transforming solutions through a mysterious element called 'Projections'.</p>
-                        <p class="font-medium text-slate-700 mt-4 inline-block">Publishing soon...</a>
+                        <span class="inline-flex items-center gap-2 mt-5 bg-accent/10 text-accent font-semibold text-sm px-4 py-2 rounded-full">
+                            <span class="w-2 h-2 rounded-full bg-accent"></span>Publishing soon
+                        </span>
                     </div>
                 </div>
             </div>
@@ -845,14 +945,22 @@
 
         <!-- Footer / Contact Section -->
         <footer id="contact" class="text-center border-t border-gray-200">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Let's Connect</h2>
+            <p class="eyebrow mb-3">Get in touch</p>
+            <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">Let's Connect</h2>
             <p class="text-lg md:text-xl max-w-2xl mx-auto text-gray-700 mb-8">
                 Have a project in mind? I'd love to hear from you.
             </p>
-            <a href="mailto:sanmeght@gmail.com" class="inline-block bg-slate-700 text-white font-medium py-3 px-8 rounded-lg text-lg hover:bg-slate-800 transition-colors">
+            <a href="mailto:sanmeght@gmail.com" class="inline-block bg-slate-800 text-white font-medium py-3 px-8 rounded-lg text-lg hover:bg-slate-900 transition-colors">
                 Send an email
             </a>
-            <p class="mt-12 text-gray-500 text-sm">&copy; 2020 Sanmegh Thokade. All Rights Reserved.</p>
+            <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 section-links text-gray-500 font-medium">
+                <a href="https://www.linkedin.com/in/sanmeghthokde/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/sanmegh" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.instagram.com/sanmeghfilms" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="https://www.imdb.com/name/nm11794280" target="_blank" rel="noopener noreferrer">IMDb</a>
+                <a href="files/cv.pdf" download>Resume</a>
+            </div>
+            <p class="mt-12 text-gray-500 text-sm">&copy; <span id="year">2024</span> Sanmegh Thokade. All Rights Reserved.</p>
         </footer>
 
     </div>
@@ -916,6 +1024,16 @@
             });
         });
 		
+		// --- Dynamic copyright year ---
+		const yearEl = document.getElementById('year');
+		if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+		// --- Header shadow on scroll ---
+		const header = document.querySelector('.site-header');
+		const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		onScroll();
+
 		// --- Route to specific section ---
 		window.addEventListener('load', () => {
 			if (window.location.hash) {
